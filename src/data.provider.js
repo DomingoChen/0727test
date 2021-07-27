@@ -1,23 +1,26 @@
 import React, { createContext, useState, useEffect } from 'react';
 
 export const dataContext = createContext({
-  data: {},
+  data: null,
   handleSetData: () => {}
 });
 
 const DataProvider = ({ children }) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    if (!data) return;
+    console.log('全域空間的資料:');
+    console.log(data);
+  }, [data]);
 
   const handleSetData = (rawData) => {
     setData(rawData);
   };
-  useEffect(() => {
-    console.log('Global data:');
-    console.log(data);
-  }, [data]);
   return (
     <dataContext.Provider
       value={{
+        // 送出資料給各地使用
         data,
         handleSetData
       }}

@@ -7,6 +7,7 @@ import DataProvider from './data.provider';
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* 加入provider到全域，被包住的component都可以使用，不用逐層傳送  */}
     <DataProvider>
       <App />
     </DataProvider>

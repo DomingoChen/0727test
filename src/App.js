@@ -2,10 +2,17 @@ import { useEffect, useContext } from 'react';
 import { dataContext } from './data.provider';
 
 function App() {
-  const { handleSetData } = useContext(dataContext);
+  const { data, handleSetData } = useContext(dataContext);
 
   useEffect(() => {
-    let url = 'http://localhost:5051/api/job';
+    if (!data) return;
+
+    console.log('從全域空間抓到local使用:');
+    console.log(data);
+  }, [data]);
+
+  useEffect(() => {
+    let url = 'http://localhost:5051/api/job'; // 請改為自己的API
 
     let params = {
       cache: 'no-cache',
@@ -19,11 +26,15 @@ function App() {
         return data.json();
       })
       .then((data) => {
+        // 抓到資料並送到全域
+        console.log('抓到資料並送到全域:');
+        console.log(data);
         handleSetData(data);
       })
       .catch((err) => {
         console.log(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div className='App'></div>;
