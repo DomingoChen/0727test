@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useContext } from 'react';
+import { dataContext } from './data.provider';
+
+const getJobList = async () => {
+  let url = 'http://localhost:5051/api/job';
+
+  let params = {
+    cache: 'no-cache',
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'GET'
+  };
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await fetch(url, params);
+      const parsed = await data.json();
+      return resolve(parsed);
+    } catch (error) {
+      return reject(error);
+    }
+  });
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const { handleSetData } = useContext(dataContext);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getJobList();
+      handleSetData(response);
+    }
+    fetchData();
+  }, []);
+
+  return <div className='App'></div>;
 }
 
 export default App;
