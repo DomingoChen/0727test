@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 export const dataContext = createContext({
   data: null,
@@ -14,9 +14,9 @@ const DataProvider = ({ children }) => {
     console.log(data);
   }, [data]);
 
-  const handleSetData = (rawData) => {
+  const handleSetData = useCallback((rawData) => {
     setData(rawData);
-  };
+  }, []);
   return (
     <dataContext.Provider
       value={{
