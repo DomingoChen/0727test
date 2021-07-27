@@ -13,9 +13,7 @@ function App() {
 
   useEffect(() => {
     let url = 'http://localhost:5051/api/job'; // 請改為自己的API
-
     let params = {
-      cache: 'no-cache',
       headers: {
         'content-type': 'application/json'
       },
